@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Extend</string>
+
+    <string name="button_server">SERVER</string>
+    <string name="button_client">CLIENT</string>
+    <string name="action_discover">DISCOVER</string>
+    <string name="button_done">DONE</string>
+    <string name="action_settings">Settings</string>
+</resources>
