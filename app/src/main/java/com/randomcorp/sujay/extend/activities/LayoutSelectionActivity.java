@@ -22,6 +22,7 @@ public class LayoutSelectionActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getBaseContext(),LayoutConfigurationActivity.class);
+                startActivity(i);
             }
         });
     }

@@ -195,7 +195,7 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
         }
     }
 
-    public DatagramPacket buildPacket(ClientModel temp,String message)
+    private DatagramPacket buildPacket(ClientModel temp,String message)
     {
         /**construct the packet*/
         DatagramPacket pkt;
@@ -205,7 +205,7 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
         return pkt;
     }
 
-    public void sendMessage(final int devNo, final String msg, final boolean time)
+    private void sendMessage(final int devNo, final String msg, final boolean time)
     {
         try
         {
@@ -245,13 +245,35 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
         }
     }
 
-    public void sendToAll(String msg,boolean isCommand)
+    public void sendCommandToAll(String msg,boolean time)
     {
         for (int i = 0;i<clients.size();i++)
         {
-            sendMessage(i, msg, isCommand);
+            sendCommandMessage(i, msg, time);
         }
     }
+
+    public void sendDataToAll(String msg)
+    {
+        for (int i = 0;i<clients.size();i++)
+        {
+            sendDataMessage(i, msg);
+        }
+    }
+
+    public void sendCommandMessage(int devNo,String msg,boolean time)
+    {
+        String command = commandHeader+delimiter+msg;
+        sendMessage(devNo,command,time);
+    }
+
+    public void sendDataMessage(int devNo,String msg)
+    {
+        String data = dataHeader+delimiter+msg;
+        sendMessage(devNo,data,false);
+    }
+
+
 
     @Override
     public void msgReceived(DatagramPacket pkt)
@@ -303,5 +325,17 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
             return;
         }
 
+    }
+
+    public int noOfClients()
+    {
+        try
+        {
+            return clients.size();
+        }
+        catch (NullPointerException e)
+        {
+            return 0;
+        }
     }
 }

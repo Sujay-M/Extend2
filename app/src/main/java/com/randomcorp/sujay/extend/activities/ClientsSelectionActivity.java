@@ -94,7 +94,7 @@ public class ClientsSelectionActivity extends AppCompatActivity implements Serve
         }
         else
         {
-            Toast.makeText(this, "Wifi not available. Please check connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Wifi not available. Please check connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -235,7 +235,7 @@ public class ClientsSelectionActivity extends AppCompatActivity implements Serve
             addresses = mAdapter.getSelectedAddresses();
             if(addresses.size()==0)
             {
-                Toast.makeText(this,"Select Clients",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Select Clients",Toast.LENGTH_SHORT).show();
             }
             else
             {
