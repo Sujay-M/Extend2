@@ -5,7 +5,14 @@
     <string name="button_next">NEXT</string>
     <string name="button_client">CLIENT</string>
     <string name="action_discover">DISCOVER</string>
+    <string name="action_sync">SYNC</string>
     <string name="button_done">DONE</string>
     <string name="action_settings">Settings</string>
     <string name="action_camera">Capture</string>
+    <string name="seek_initial">00:00</string>
+    <string name="seek_final">--:--</string>
+    <string name="tv_choose_file">CHOOSE FILE</string>
+    <string name="button_prev">PREVIOUS</string>
+    <string name="button_play">PLAY/PAUSE</string>
+    <string name="now_plaing">NOW PLAYING</string>
 </resources>
