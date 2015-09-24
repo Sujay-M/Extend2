@@ -66,7 +66,7 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
     @Override
     public void commandReceived(String type, String data)
     {
-        ((TextView)findViewById(R.id.tv_msgrceived)).setText(data);
+        //((TextView)findViewById(R.id.tv_msgrceived)).setText(data);
         if(type.equals(initImage))
         {
 
@@ -117,10 +117,12 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
                         imageFragment = null;
                         break;
                     case commandWhite:
-                        mainView.setBackgroundColor(Color.WHITE);
+                        if(videoFragment!=null)
+                            videoFragment.changeBackgroundColor("WHITE");
                         break;
                     case commandRed:
-                        mainView.setBackgroundColor(Color.RED);
+                        if(videoFragment!=null)
+                            videoFragment.changeBackgroundColor("RED");
                         break;
                     case commandPlay:
                         serverTime = Long.parseLong(dataParts[1])+1000;

@@ -153,7 +153,7 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
                     msgNo = messageNo;
                     sendAck();
                 }
-                else if(serverAddr.equals(serverAddress))
+                else if(serverAddr.equals(serverAddress) && msgParts.length>1)
                 {
                     int messageNo = Integer.parseInt(msgParts[1]);
                     if(msgNo==messageNo || (msgNo+1)==messageNo)

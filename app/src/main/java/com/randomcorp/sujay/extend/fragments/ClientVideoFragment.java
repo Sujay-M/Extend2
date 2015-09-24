@@ -1,6 +1,7 @@
 package com.randomcorp.sujay.extend.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.MediaMetadataRetriever;
@@ -32,6 +33,7 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
     private Surface surface;
     private boolean mediaPrepared;
     private DeviceModel dev;
+    private FrameLayout frameLayout;
 
     public ClientVideoFragment()
     {
@@ -48,6 +50,7 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
                              Bundle savedInstanceState)
     {
         View v =  inflater.inflate(R.layout.client_video_fragment, container, false);
+        frameLayout = (FrameLayout)v.findViewById(R.id.fl_main_view);
         textureView = (TextureView)v.findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(this);
         mediaPlayer = null;
@@ -89,6 +92,7 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
         } catch (IllegalStateException e) {
             Log.d(TAG, e.getMessage());
         }
+        changeBackgroundColor("BLACK");
     }
 
     @Override
@@ -195,7 +199,7 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
         textureView.setLayoutParams(layoutParams);
     }
 
-    public void controlMedialPlayer(String command, long sleepTime)
+    public void controlMedialPlayer(String command, final long sleepTime)
     {
         if(mediaPrepared)
         {
@@ -203,21 +207,34 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
             {
                 case commandPlay:
                     Log.d(TAG, "Play command sleep time - "+sleepTime);
-                    try {
-                        Thread.sleep(sleepTime);
-                        mediaPlayer.start();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(sleepTime);
+                                mediaPlayer.start();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }).start();
                     break;
+
                 case commandPause:
                     Log.d(TAG, "Pause command sleep time - "+sleepTime);
-                    try {
-                        Thread.sleep(sleepTime);
-                        mediaPlayer.start();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(sleepTime);
+                                mediaPlayer.pause();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }).start();
                     break;
                 case commandStop:
                     Log.d(TAG, "Stop command sleep time - "+sleepTime);
@@ -233,5 +250,14 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
             }
         }
 
+    }
+    public void changeBackgroundColor(String color)
+    {
+        if(color.equals("WHITE"))
+            frameLayout.setBackgroundColor(Color.WHITE);
+        else if(color.equals("RED"))
+            frameLayout.setBackgroundColor(Color.RED);
+        else if(color.equals("BLACK"))
+            frameLayout.setBackgroundColor(Color.BLACK);
     }
 }
