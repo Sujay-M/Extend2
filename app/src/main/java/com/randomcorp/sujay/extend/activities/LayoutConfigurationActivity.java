@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.randomcorp.sujay.extend.ImageProcessing.NewLayout;
+import com.randomcorp.sujay.extend.imageProcessing.NewLayout;
 import com.randomcorp.sujay.extend.R;
 import com.randomcorp.sujay.extend.networking.ExtendProtocol;
 import com.randomcorp.sujay.extend.networking.ServerExtendProtocol;

@@ -4,10 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.randomcorp.sujay.extend.fragments.ImageFragment;
-import com.randomcorp.sujay.extend.fragments.VideoFragment;
-
-import org.opencv.video.Video;
+import com.randomcorp.sujay.extend.fragments.ServerImageFragment;
+import com.randomcorp.sujay.extend.fragments.ServerVideoFragment;
 
 /**
  * Created by sujay on 24/9/15.
@@ -25,10 +23,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                VideoFragment tab1 = new VideoFragment();
+                ServerVideoFragment tab1 = new ServerVideoFragment();
                 return tab1;
             case 1:
-                ImageFragment tab2 = new ImageFragment();
+                ServerImageFragment tab2 = new ServerImageFragment();
                 return tab2;
 
             default:

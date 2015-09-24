@@ -222,7 +222,7 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
                         sendPkt = buildPacket(temp,msg);
                     while (temp.getMsgNumber() == currentNo && temp.getTryNo() < MAXTRY)
                     {
-                        Log.d(TAG, "msg no = " + temp.getMsgNumber() + " to client " + temp.devNo);
+                        Log.d(TAG, "msg no = " + temp.getMsgNumber() + " to client " + temp.devNo+" msg = "+msg);
                         int tryNo = temp.getTryNo();
                         temp.setTryNo((tryNo + 1));
                         server.send(sendPkt);
@@ -315,6 +315,18 @@ public class ServerExtendProtocol implements ExtendProtocol, Networking.MessageR
                     int messageNo = Integer.parseInt(msgParts[2]);
                     if(temp.getMsgNumber()==messageNo)
                         temp.setMsgNo(messageNo+1);
+                }
+                else if(addressIntegerHashMap.containsKey(clientAddr) && msgParts[1].equals(syncHeader))
+                {
+                    Log.d(TAG,"Sync Request");
+                    ClientModel temp = clients.get(addressIntegerHashMap.get(clientAddr));
+                    long clientTime = Long.parseLong(msgParts[2]);
+                    long serverTime = SystemClock.elapsedRealtime();
+                    long skew = clientTime-serverTime;
+                    String msg = syncHeader+delimiter+skew;
+                    Log.d(TAG,"msg sync sent to devno = "+temp.devNo);
+                    sendDataMessage(temp.devNo, msg);
+
                 }
 
             }

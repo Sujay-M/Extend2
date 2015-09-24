@@ -3,6 +3,7 @@ package com.randomcorp.sujay.extend.networking;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.net.DatagramPacket;
@@ -173,16 +174,24 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
         {
             return;
         }
-
-        Message msg = handler.obtainMessage();
-        Bundle b = msg.getData();
-        b.putString("TYPE",msgParts[0]);
-        b.putString("DATA",message);
-        handler.sendMessage(msg);
     }
+
     private void startImageServer()
     {
 
+    }
+
+    public void sendSyncPacket()
+    {
+        byte buf[];
+        buf = (clientStartHeader+delimiter+syncHeader+delimiter+SystemClock.elapsedRealtime()).getBytes();
+        final DatagramPacket syncPkt = new DatagramPacket(buf, buf.length, serverAddress, port);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                client.send(syncPkt);
+            }
+        }).start();
     }
 
 }

@@ -1,10 +1,9 @@
-package com.randomcorp.sujay.extend.ImageProcessing;
+package com.randomcorp.sujay.extend.imageProcessing;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.MotionEvent;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -144,7 +143,12 @@ public class NewLayout
     private void testAssignBox(Rect box,int devno)
     {
         LayoutModel model = LayoutModel.getSingleton();
-        model.setClientRect(devno,box);
+        Integer[] rect = new Integer[4];
+        rect[0] = box.x;
+        rect[1] = box.y;
+        rect[2] = box.width;
+        rect[3] = box.height;
+        model.setClientRect(devno,rect);
         Mat result = ORIGINAL.clone();
         Core.rectangle(result, box.tl(), box.br(), new Scalar(255, 255, 0), -1);
         Bitmap bm = Bitmap.createBitmap(result.cols(), result.rows(), Bitmap.Config.ARGB_8888);
@@ -156,7 +160,8 @@ public class NewLayout
     {
         LayoutModel model = LayoutModel.getSingleton();
         Mat result = ORIGINAL.clone();
-        Rect box = model.getClientRect(devNo);
+        Integer[] rect = model.getClientRect(devNo);
+        Rect box = new Rect(rect[0],rect[1],rect[2],rect[3]);
         Core.rectangle(result, box.tl(), box.br(), new Scalar(0, 255,0), -1);
         Core.rectangle(mask, box.tl(), box.br(), new Scalar(255), -1);
         Bitmap bm = Bitmap.createBitmap(result.cols(), result.rows(), Bitmap.Config.ARGB_8888);

@@ -25,4 +25,7 @@ public interface ExtendProtocol
     String commandPause = "PAUSE";
     String commandStop = "STOP";
     String commandSeek = "SEEK";
+    String commandSync = "SYNC";
+    String initVideo = "VIDEO";
+    String initImage = "IMAGE";
 }

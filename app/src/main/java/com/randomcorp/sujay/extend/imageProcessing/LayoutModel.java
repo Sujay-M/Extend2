@@ -1,4 +1,4 @@
-package com.randomcorp.sujay.extend.ImageProcessing;
+package com.randomcorp.sujay.extend.imageProcessing;
 
 import org.opencv.core.Rect;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class LayoutModel
 {
     private List<Integer[]> layout;
-    private HashMap<Integer,Rect> clientRects;
+    private HashMap<Integer,Integer[]> clientRects;
     static LayoutModel LAYOUT = null;
     private LayoutModel()
     {
@@ -37,12 +37,12 @@ public class LayoutModel
         return layout;
     }
 
-    public void setClientRect(int devNo,Rect box)
+    public void setClientRect(int devNo,Integer[] box)
     {
         clientRects.put(devNo,box);
     }
 
-    public Rect getClientRect(int devNo)
+    public Integer[] getClientRect(int devNo)
     {
         if(clientRects.containsKey(devNo))
             return clientRects.get(devNo);
