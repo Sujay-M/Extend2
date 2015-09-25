@@ -1,6 +1,9 @@
 package com.randomcorp.sujay.extend.models;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+
+import com.randomcorp.sujay.extend.Utils.RoundedCharacterDrawable;
 
 import java.net.InetAddress;
 
@@ -9,17 +12,22 @@ import java.net.InetAddress;
  */
 public class ClientListModel
 {
-    public Bitmap image;
-    public  String deviceName;
+    public RoundedCharacterDrawable drawable;
+    public  String deviceName,modelName;
     public boolean isSelected;
     public InetAddress ipAddress;
-    public ClientListModel(Bitmap image,String deviceName,InetAddress ipAddress)
+    public ClientListModel(String deviceName,String modelName,InetAddress ipAddress)
     {
-        this.image = image;
         this.deviceName = deviceName;
+        this.modelName = modelName;
         this.ipAddress = ipAddress;
+        this.drawable = new RoundedCharacterDrawable(deviceName.charAt(0), getColor(deviceName.charAt(0)));
         isSelected = false;
 
+    }
+    private int getColor(char ch)
+    {
+        return Color.BLUE;
     }
 
 }

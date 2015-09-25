@@ -27,7 +27,8 @@
             android:textStyle="bold"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="14sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
@@ -40,7 +41,8 @@
             android:textStyle="bold"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="14sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

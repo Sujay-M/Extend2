@@ -24,9 +24,9 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
     private Networking client;
     private boolean isConnected;
     private Handler handler;
-    private String deviceName = "ABC";
+    private String deviceName = "Itachi-Uchiha";
     private String macAddress = "XYZ";
-    private int iconNumber = 1;
+    private String modelName = "LAVA-IRIS-501";
     private boolean isImageServerRunning;
     private InetAddress serverAddress;
     private int msgNo,devNo;
@@ -131,7 +131,7 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
                         public void run()
                         {
                             Log.d(TAG,"sending addr = "+serverAddr.getHostAddress()+" port = "+port);
-                            byte[] buf = (clientStartHeader + delimiter + deviceInfoHeader + delimiter + deviceName + delimiter + iconNumber).getBytes();
+                            byte[] buf = (clientStartHeader + delimiter + deviceInfoHeader + delimiter + deviceName + delimiter + modelName).getBytes();
                             DatagramPacket indentifyPkt = new DatagramPacket(buf, buf.length, serverAddr, port);
                             client.send(indentifyPkt);
                         }
@@ -153,7 +153,7 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
                     msgNo = messageNo;
                     sendAck();
                 }
-                else if(serverAddr.equals(serverAddress) && msgParts.length>1)
+                else if(serverAddr.equals(serverAddress) && msgParts.length>2)
                 {
                     int messageNo = Integer.parseInt(msgParts[1]);
                     if(msgNo==messageNo || (msgNo+1)==messageNo)

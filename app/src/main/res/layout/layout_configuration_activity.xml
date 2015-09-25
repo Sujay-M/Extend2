@@ -17,6 +17,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:text="@string/button_next"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

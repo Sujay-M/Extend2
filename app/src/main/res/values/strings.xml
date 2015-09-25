@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Extend</string>
+    <string name="client_selection">Select Clients</string>
+    <string name="layout_selection">Select Layout</string>
+    <string name="layout_configuration">Configure Layout</string>
 
     <string name="button_server">SERVER</string>
     <string name="button_next">NEXT</string>

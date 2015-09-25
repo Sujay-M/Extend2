@@ -90,6 +90,7 @@ public class ClientsSelectionActivity extends AppCompatActivity implements Serve
         if(IP!=null && IP.length()!=0)
         {
             Log.d(TAG,"IP = "+IP);
+            mAdapter.clearList();
             server.discover(IP);
         }
         else
@@ -217,11 +218,9 @@ public class ClientsSelectionActivity extends AppCompatActivity implements Serve
         String[] msgParts = msg.split(delimitier);
         if(msgParts[0].equals("INFO"))
         {
-            Bitmap avatar = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.avatar);
             String deviceName = msgParts[1];
-            String iconNumber = msgParts[2];
-            mAdapter.add(avatar,deviceName,clientAddress);
+            String modelName = msgParts[2];
+            mAdapter.add(deviceName,modelName,clientAddress);
         }
 
     }
