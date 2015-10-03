@@ -62,7 +62,6 @@ public class LayoutConfigurationActivity extends AppCompatActivity implements Vi
                     if(imageAvailable && captured!=null)
                     {
                         processor.setORIGINAL(captured);
-                        devNo = 0;
                     }
                     Log.i(TAG, "OpenCV loaded successfully");
 
@@ -78,7 +77,9 @@ public class LayoutConfigurationActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"ONCREATE called");
         setContentView(R.layout.layout_configuration_activity);
         mImageView = (ImageView)findViewById(R.id.iv_layout);
         mImageView.setOnTouchListener(this);
@@ -146,6 +147,7 @@ public class LayoutConfigurationActivity extends AppCompatActivity implements Vi
 
     private void setPic()
     {
+        devNo = 0;
         try
         {
             int targetW = mImageView.getWidth();
@@ -253,7 +255,6 @@ public class LayoutConfigurationActivity extends AppCompatActivity implements Vi
                 }
             }
 
-
         }
     }
 
@@ -280,6 +281,7 @@ public class LayoutConfigurationActivity extends AppCompatActivity implements Vi
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
+        Log.d(TAG,"OnTouch called");
         if(imageAvailable && devNo < server.noOfClients())
         {
 

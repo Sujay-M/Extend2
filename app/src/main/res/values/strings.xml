@@ -18,4 +18,9 @@
     <string name="button_prev">PREVIOUS</string>
     <string name="button_play">PLAY/PAUSE</string>
     <string name="now_plaing">NOW PLAYING</string>
+    <string name="devicename">DEVICE NAME</string>
+    <string name="username">USER NAME</string>
+    <string name="setting_dialogue">EXTEND SETTINGS</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="cancel">CANCEL</string>
 </resources>

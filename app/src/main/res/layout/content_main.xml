@@ -20,8 +20,6 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:text="@string/button_server"
             android:id="@+id/b_server"
             android:textStyle="bold"
@@ -32,8 +30,6 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:id="@+id/b_client"
             android:text="@string/button_client"
             android:layout_marginTop="18dp"

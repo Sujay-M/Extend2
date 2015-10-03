@@ -1,6 +1,6 @@
 package com.randomcorp.sujay.extend.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
@@ -101,7 +101,7 @@ public class ClientVideoFragment extends Fragment implements TextureView.Surface
         Log.d(TAG,"Media prepared");
     }
 
-    private void stopPlayer()
+    public void stopPlayer()
     {
         if(mediaPlayer!=null)
         {

@@ -1,6 +1,7 @@
 package com.randomcorp.sujay.extend.fragments;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 /**
  * Created by sujay on 24/9/15.

@@ -1,11 +1,12 @@
 package com.randomcorp.sujay.extend.activities;
 
-import android.app.FragmentTransaction;
+
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Surface;
@@ -31,22 +32,26 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
 {
     private static final String TAG = "CLIENT ACTIVITY";
     private ClientExtendProtocol clientProtocol;
-    private LinearLayout mainView;
+    private FrameLayout mainView;
     private long clock_skew=0;
     private int sync_no;
     private ClientImageFragment imageFragment;
     private ClientVideoFragment videoFragment;
+    private String username,devicename;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        username = getIntent().getStringExtra("USERNAME");
+        devicename = getIntent().getStringExtra("DEVNAME");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.client_layout);
-        mainView = (LinearLayout)findViewById(R.id.ll_main_view);
-        clientProtocol = new ClientExtendProtocol(this);
+        mainView = (FrameLayout)findViewById(R.id.fl_fragment_holder);
+        clientProtocol = new ClientExtendProtocol(this,username,devicename);
         videoFragment = new ClientVideoFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.ll_main_view,videoFragment,"VIDEO");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fl_fragment_holder,videoFragment,"VIDEO");
         transaction.commit();
 
     }
@@ -67,16 +72,6 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
     public void commandReceived(String type, String data)
     {
         //((TextView)findViewById(R.id.tv_msgrceived)).setText(data);
-        if(type.equals(initImage))
-        {
-
-            return;
-        }
-        else if(type.equals(initVideo))
-        {
-
-            return;
-        }
         String dataParts[] = data.split(delimiter);
         switch(type)
         {
@@ -87,32 +82,17 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
                 {
                     case initImage:
                         imageFragment = new ClientImageFragment();
-                        transaction = getFragmentManager().beginTransaction();
-                        if(transaction.isEmpty())
-                        {
-                            transaction.add(R.id.ll_main_view,imageFragment,"IMAGE");
-                        }
-                        else
-                        {
-                            transaction.replace(R.id.ll_main_view,imageFragment,"IMAGE");
-                            transaction.addToBackStack(null);
-                        }
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fl_fragment_holder,imageFragment,"IMAGE");
                         transaction.commit();
+                        videoFragment.stopPlayer();
                         videoFragment = null;
                         break;
 
                     case initVideo:
                         videoFragment = new ClientVideoFragment();
-                        transaction = getFragmentManager().beginTransaction();
-                        if(transaction.isEmpty())
-                        {
-                            transaction.add(R.id.ll_main_view,videoFragment,"VIDEO");
-                        }
-                        else
-                        {
-                            transaction.replace(R.id.ll_main_view,videoFragment,"VIDEO");
-                            transaction.addToBackStack(null);
-                        }
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fl_fragment_holder, videoFragment,"VIDEO");
                         transaction.commit();
                         imageFragment = null;
                         break;

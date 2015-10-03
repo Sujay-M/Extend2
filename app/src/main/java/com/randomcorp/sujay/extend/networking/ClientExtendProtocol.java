@@ -24,16 +24,18 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
     private Networking client;
     private boolean isConnected;
     private Handler handler;
-    private String deviceName = "Itachi-Uchiha";
+    private String username;
     private String macAddress = "XYZ";
-    private String modelName = "LAVA-IRIS-501";
+    private String devicename;
     private boolean isImageServerRunning;
     private InetAddress serverAddress;
     private int msgNo,devNo;
 
-    public ClientExtendProtocol(CommandFromServer commandFromServer)
+    public ClientExtendProtocol(CommandFromServer commandFromServer,String username,String deviceName)
     {
         this.callback = commandFromServer;
+        this.username = username;
+        this.devicename = deviceName;
         isConnected = false;
         client = new Networking(this);
         setDevNo(-1);
@@ -72,7 +74,7 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
 
     private void connectToServer()
     {
-        byte[] buf = (clientStartHeader+delimiter+deviceDetailsHeader+delimiter+macAddress+delimiter+deviceName).getBytes();
+        byte[] buf = (clientStartHeader+delimiter+deviceDetailsHeader+delimiter+macAddress+delimiter+ username).getBytes();
         final DatagramPacket ack = new DatagramPacket(buf,buf.length,serverAddress,port);
         Thread t = new Thread(new Runnable()
         {
@@ -131,7 +133,7 @@ public class ClientExtendProtocol implements ExtendProtocol, Networking.MessageR
                         public void run()
                         {
                             Log.d(TAG,"sending addr = "+serverAddr.getHostAddress()+" port = "+port);
-                            byte[] buf = (clientStartHeader + delimiter + deviceInfoHeader + delimiter + deviceName + delimiter + modelName).getBytes();
+                            byte[] buf = (clientStartHeader + delimiter + deviceInfoHeader + delimiter + username + delimiter + devicename).getBytes();
                             DatagramPacket indentifyPkt = new DatagramPacket(buf, buf.length, serverAddr, port);
                             client.send(indentifyPkt);
                         }

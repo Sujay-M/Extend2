@@ -1,6 +1,7 @@
 package com.randomcorp.sujay.extend.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,10 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.randomcorp.sujay.extend.R;
+import com.randomcorp.sujay.extend.Utils.SettingsDialogue;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String PREFERENCES = "EXTENDUSERPREFS";
+    private static final String FIRSTUSE = "FIRST";
+    private final String DEVICENAME = "DEVNAME";
+    private final String USERNAME = "USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +28,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFERENCES,0);
         findViewById(R.id.b_server).setOnClickListener(this);
         findViewById(R.id.b_client).setOnClickListener(this);
+        if(!pref.contains(FIRSTUSE))
+        {
+            SettingsDialogue dialogue = new SettingsDialogue();
+            dialogue.show(getSupportFragmentManager(),"settings");
+        }
 
     }
 
@@ -40,7 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
+            SettingsDialogue dialogue = new SettingsDialogue();
+            dialogue.show(getSupportFragmentManager(),"settings");
             return true;
         }
 
@@ -53,8 +70,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.b_client:
-                i = new Intent(this,ClientActivity.class);
-                startActivity(i);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(PREFERENCES,0);
+                if(!pref.contains(FIRSTUSE))
+                    Toast.makeText(this,"Please Set Username and Devicename",Toast.LENGTH_SHORT).show();
+                else
+                {
+                    String username = pref.getString(USERNAME,"USERNAME");
+                    String devicename = pref.getString(DEVICENAME,"DEVICENAME");
+                    i = new Intent(this,ClientActivity.class);
+                    i.putExtra(USERNAME,username);
+                    i.putExtra(DEVICENAME,devicename);
+                    startActivity(i);
+                }
+
                 break;
             case R.id.b_server:
                 i = new Intent(this,ClientsSelectionActivity.class);
