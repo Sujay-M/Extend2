@@ -23,7 +23,6 @@ import com.randomcorp.sujay.extend.networking.ClientExtendProtocol;
 import com.randomcorp.sujay.extend.networking.ExtendProtocol;
 
 import java.io.File;
-import java.net.DatagramPacket;
 
 /**
  * Created by sujay on 21/9/15.
