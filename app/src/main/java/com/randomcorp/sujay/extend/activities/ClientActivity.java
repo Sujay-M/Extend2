@@ -1,23 +1,16 @@
 package com.randomcorp.sujay.extend.activities;
 
 
-import android.graphics.Color;
-import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Surface;
-import android.view.TextureView;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.randomcorp.sujay.extend.R;
-import com.randomcorp.sujay.extend.fragments.ClientImageFragment;
 import com.randomcorp.sujay.extend.fragments.ClientVideoFragment;
 import com.randomcorp.sujay.extend.networking.ClientExtendProtocol;
 import com.randomcorp.sujay.extend.networking.ExtendProtocol;
@@ -34,7 +27,6 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
     private FrameLayout mainView;
     private long clock_skew=0;
     private int sync_no;
-    private ClientImageFragment imageFragment;
     private ClientVideoFragment videoFragment;
     private String username,devicename;
 
@@ -46,7 +38,6 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
         devicename = getIntent().getStringExtra("DEVNAME");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.client_layout);
-        mainView = (FrameLayout)findViewById(R.id.fl_fragment_holder);
         clientProtocol = new ClientExtendProtocol(this,username,devicename);
         videoFragment = new ClientVideoFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -70,31 +61,13 @@ public class ClientActivity extends AppCompatActivity implements ClientExtendPro
     @Override
     public void commandReceived(String type, String data)
     {
-        //((TextView)findViewById(R.id.tv_msgrceived)).setText(data);
         String dataParts[] = data.split(delimiter);
         switch(type)
         {
             case commandHeader:
                 long serverTime,clientTime,sleepTime;
-                FragmentTransaction transaction;
                 switch (dataParts[0])
                 {
-                    case initImage:
-                        imageFragment = new ClientImageFragment();
-                        transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fl_fragment_holder,imageFragment,"IMAGE");
-                        transaction.commit();
-                        videoFragment.stopPlayer();
-                        videoFragment = null;
-                        break;
-
-                    case initVideo:
-                        videoFragment = new ClientVideoFragment();
-                        transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fl_fragment_holder, videoFragment,"VIDEO");
-                        transaction.commit();
-                        imageFragment = null;
-                        break;
                     case commandWhite:
                         if(videoFragment!=null)
                             videoFragment.changeBackgroundColor("WHITE");
